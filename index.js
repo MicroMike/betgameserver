@@ -6,12 +6,7 @@ const clients = {};
 const games = {};
 let searchPlayer = [];
 
-// event fired every time a new client connects:
-server.on("connection", (socket) => {
-  console.info(`Client connected [id=${socket.id}]`);
-  // initialize this client's sequence number
-  clients[socket.id] = socket;
-
+const play = (socket) => {
   if (searchPlayer.length < 2) {
     searchPlayer.push(socket);
   }
@@ -28,6 +23,19 @@ server.on("connection", (socket) => {
       player.emit('gameOn')
     }
   }
+}
+
+// event fired every time a new client connects:
+server.on("connection", (socket) => {
+  console.info(`Client connected [id=${socket.id}]`);
+  // initialize this client's sequence number
+  clients[socket.id] = socket;
+
+
+  play(socket)
+
+  socket.on('replay', play(socket))
+
 
   socket.on('choice', e => {
     socket.choice = e;
