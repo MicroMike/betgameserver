@@ -10,6 +10,8 @@ server.on("connection", (socket) => {
   // initialize this client's sequence number
   clients[socket.id] = socket;
 
+  socket.emit('gameOn')
+  
   // when socket disconnects, remove it from the list:
   socket.on("disconnect", () => {
     delete clients[socket.id];
