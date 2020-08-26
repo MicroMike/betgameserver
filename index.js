@@ -3,6 +3,8 @@ const
   server = io.listen(process.env.PORT);
 
 const clients = {};
+const games = {};
+const searchPlayer = [];
 
 // event fired every time a new client connects:
 server.on("connection", (socket) => {
@@ -10,10 +12,21 @@ server.on("connection", (socket) => {
   // initialize this client's sequence number
   clients[socket.id] = socket;
 
-  socket.gameId = socket.id;
-  console.log(clients[socket.id].gameId)
+  if (searchPlayer < 2) {
+    searchPlayer.push(socket);
+  }
 
-  socket.emit('gameOn')
+  if (searchPlayer.length === 2) {
+    const players = searchPlayer;
+    searchPlayer = [];
+    const gameId = players[0].id;
+    games[gameId] = players;
+
+    for (const player of players) {
+      player.emit('gameOn')
+    }
+
+  }
 
   socket.on('choice', e => {
     socket.choice = e;
