@@ -4,7 +4,7 @@ const
 
 const clients = {};
 const games = {};
-const searchPlayer = [];
+let searchPlayer = [];
 
 // event fired every time a new client connects:
 server.on("connection", (socket) => {
@@ -17,6 +17,7 @@ server.on("connection", (socket) => {
   }
 
   if (searchPlayer.length === 2) {
+    console.log('gameOn')
     const players = searchPlayer;
     searchPlayer = [];
     const gameId = players[0].id;
@@ -40,5 +41,5 @@ server.on("connection", (socket) => {
 
 // sends each client its current sequence number
 setInterval(() => {
-  console.log(Object.keys(clients).length);
+  // console.log(Object.keys(clients).length);
 }, 1000);
