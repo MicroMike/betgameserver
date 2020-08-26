@@ -31,7 +31,7 @@ server.on("connection", (socket) => {
 
   socket.on('choice', e => {
     socket.choice = e;
-    const game = games[e.gameId]
+    const game = games[socket.gameId]
     const waiting = game.find(player => !player.choice);
 
     if (!waiting) {
