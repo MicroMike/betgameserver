@@ -10,7 +10,7 @@ server.on("connection", (socket) => {
   // initialize this client's sequence number
   clients[socket.id] = socket;
 
-  socket.gameId = id;
+  socket.gameId = socket.id;
   console.log(clients[socket.id].gameId)
 
   socket.emit('gameOn')
