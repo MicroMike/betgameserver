@@ -24,12 +24,19 @@ server.on("connection", (socket) => {
     games[gameId] = players;
 
     for (const player of players) {
+      player.gameId = gameId
       player.emit('gameOn')
     }
   }
 
   socket.on('choice', e => {
     socket.choice = e;
+    const game = games[e.gameId]
+    const waiting = game.find(player => !player.choice);
+
+    if (!waiting) {
+      console.log('both played')
+    }
   })
 
   // when socket disconnects, remove it from the list:
