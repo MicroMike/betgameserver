@@ -33,8 +33,14 @@ server.on("connection", (socket) => {
     socket.choice = e;
     const game = games[socket.gameId]
     const waiting = game.find(player => !player.choice);
+    const [p1, p2] = game;
 
     if (!waiting) {
+      const p1Win = p1.choice > p2.choice && p2.choice != 1;
+
+      p1.emit('endGame', p1Win ? 'win' : 'loose');
+      p2.emit('endGame', !p1Win ? 'win' : 'loose');
+
       console.log('both played')
     }
   })
