@@ -12,7 +12,7 @@ server.on("connection", (socket) => {
   // initialize this client's sequence number
   clients[socket.id] = socket;
 
-  if (searchPlayer < 2) {
+  if (searchPlayer.length < 2) {
     searchPlayer.push(socket);
   }
 
@@ -25,7 +25,6 @@ server.on("connection", (socket) => {
     for (const player of players) {
       player.emit('gameOn')
     }
-
   }
 
   socket.on('choice', e => {
