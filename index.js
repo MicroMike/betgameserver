@@ -34,8 +34,7 @@ server.on("connection", (socket) => {
 
   play(socket)
 
-  socket.on('replay', play(socket))
-
+  socket.on('replay', () => play(socket))
 
   socket.on('choice', e => {
     socket.choice = e;
