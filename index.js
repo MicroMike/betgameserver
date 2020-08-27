@@ -47,6 +47,7 @@ server.on("connection", (socket) => {
 
     if (!waiting) {
       const p1Win = p1.choice - p2.choice > 0;
+      console.log(p1.choice, p2.choice, p1.choice - p2.choice)
 
       p1.emit('endGame', p1Win ? 'win' : 'loose');
       p2.emit('endGame', !p1Win ? 'win' : 'loose');
