@@ -20,6 +20,7 @@ const play = (socket) => {
 
     for (const player of players) {
       player.gameId = gameId
+      player.choice = null
       player.emit('gameOn')
     }
   }
@@ -34,7 +35,6 @@ server.on("connection", (socket) => {
   play(socket)
 
   socket.on('replay', () => {
-    socket.choice = null
     games[socket.gameId] && delete games[socket.gameId]
     play(socket)
   })
@@ -42,7 +42,7 @@ server.on("connection", (socket) => {
   socket.on('choice', e => {
     socket.choice = e;
     const game = games[socket.gameId]
-    const waiting = game.find(player => !player.choice);
+    const waiting = game.find(player => player.choice != null);
     const [p1, p2] = game;
 
     if (!waiting) {
