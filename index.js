@@ -59,13 +59,13 @@ server.on("connection", (socket) => {
 
   // when socket disconnects, remove it from the list:
   socket.on("disconnect", () => {
-    delete clients[socket.id];
     console.info(`Client gone [id=${socket.id}]`);
+    delete clients[socket.id];
     socket.disconnect()
   });
 });
 
 // sends each client its current sequence number
 setInterval(() => {
-  // console.log(Object.keys(clients).length);
+  console.log(Object.keys(clients).length);
 }, 1000);
