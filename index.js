@@ -61,6 +61,7 @@ server.on("connection", (socket) => {
   socket.on("disconnect", () => {
     delete clients[socket.id];
     console.info(`Client gone [id=${socket.id}]`);
+    socket.disconnect()
   });
 });
 
