@@ -31,11 +31,7 @@ server.on("connection", (socket) => {
   // initialize this client's sequence number
   clients[socket.id] = socket;
 
-  socket.emit('ok')
-
-  socket.on('play', () => {
-    play(socket)
-  })
+  play(socket)
 
   socket.on('replay', () => {
     games[socket.gameId] && delete games[socket.gameId]
