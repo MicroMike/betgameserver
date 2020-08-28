@@ -73,5 +73,5 @@ server.on("connection", (socket) => {
 
 // sends each client its current sequence number
 setInterval(() => {
-  console.log(Object.keys(clients).length);
+  console.log(searchPlayer.length);
 }, 1000);
