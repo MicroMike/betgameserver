@@ -8,11 +8,10 @@ let searchPlayer = [];
 
 const play = (socket) => {
   if (searchPlayer.length < 2) {
-    searchPlayer.push(socket);
+    searchPlayer[socket.id] = socket;
   }
 
   if (searchPlayer.length === 2) {
-    console.log('gameOn')
     const players = searchPlayer;
     searchPlayer = [];
     const gameId = players[0].id;
@@ -32,7 +31,11 @@ server.on("connection", (socket) => {
   // initialize this client's sequence number
   clients[socket.id] = socket;
 
-  play(socket)
+  socket.emit('ok')
+
+  socket.on('play', () => {
+    play(socket)
+  })
 
   socket.on('replay', () => {
     games[socket.gameId] && delete games[socket.gameId]
@@ -47,13 +50,10 @@ server.on("connection", (socket) => {
 
     if (!waiting) {
       const calcul = p2.choice - p1.choice;
-      console.log(calcul)
       const p1Win = calcul === 2 || calcul === -1;
 
       p1.emit('endGame', p1Win ? 'win' : 'loose');
       p2.emit('endGame', !p1Win ? 'win' : 'loose');
-
-      console.log('both played')
     }
   })
 
