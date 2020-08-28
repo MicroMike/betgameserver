@@ -58,6 +58,12 @@ server.on("connection", (socket) => {
   })
 
   // when socket disconnects, remove it from the list:
+  socket.on("over", () => {
+    console.info(`Client gone [id=${socket.id}]`);
+    delete clients[socket.id];
+    socket.disconnect()
+  });
+
   socket.on("disconnect", () => {
     console.info(`Client gone [id=${socket.id}]`);
     delete clients[socket.id];
